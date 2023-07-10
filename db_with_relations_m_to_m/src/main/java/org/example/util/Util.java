@@ -1,5 +1,7 @@
 package org.example.util;
 
+import org.postgresql.util.PSQLException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,22 +19,12 @@ public class Util {
     private static final String DB_PASSWORD = "password";
 
     public static Connection getConnection() {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(DB_URL, DB_LOGIN, DB_PASSWORD);
+        try(Connection connection = DriverManager.getConnection(DB_URL, DB_LOGIN, DB_PASSWORD)) {
             System.out.println("Connection is open successfully!!!");
             return connection;
         } catch (SQLException e) {
+            System.out.println("Connection is uncorrected!!!");
             e.printStackTrace();
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                    System.out.println("Connection is close successfully!!!");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
