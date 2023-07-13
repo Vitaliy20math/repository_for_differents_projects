@@ -1,13 +1,7 @@
 package org.example.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Одна из сущностей - игрушка, с полями:
@@ -18,11 +12,10 @@ import java.util.Set;
 public class Toys {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     @Column(name = "name")
-    String name;
-    @ManyToMany(fetch = FetchType.LAZY)
-    Set<Child> child = new HashSet<>();
+    private String name;
+
 
     public Toys(String name) {
         this.name = name;
@@ -31,6 +24,8 @@ public class Toys {
     public Toys() {
 
     }
+
+
 
     public int getId() {
         return id;

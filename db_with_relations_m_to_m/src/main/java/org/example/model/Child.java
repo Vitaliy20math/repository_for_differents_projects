@@ -1,9 +1,5 @@
 package org.example.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +11,8 @@ import java.util.Set;
  * name - имя ребенка
  * surname - фамилия ребенка
  * Set<Toys> toys - сет игрушек ребенка
+ *
+ * не используем orphanRemove в связях типа ManyTo.. В данном случае лучше применить cascadeType
  */
 
 @Entity
@@ -22,17 +20,16 @@ import java.util.Set;
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
     @Column(name = "username")
-    String name;
+    private String name;
     @Column(name = "surname")
-    String surname;
-    @ManyToMany
+    private String surname;
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinTable(
             name = "children_toys",
             joinColumns = @JoinColumn(name = "child_id"),
             inverseJoinColumns = @JoinColumn(name = "toy_id"))
-
     private Set<Toys> toys = new HashSet<>();
 
     public Child(String name, String surname, Set<Toys> toys) {
@@ -48,6 +45,14 @@ public class Child {
 
     public Child() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

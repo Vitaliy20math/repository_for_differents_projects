@@ -7,7 +7,6 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -54,7 +53,7 @@ public class Util {
 
             settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-            settings.put(Environment.HBM2DDL_AUTO, "create");
+            settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
             configuration.setProperties(settings);
 
